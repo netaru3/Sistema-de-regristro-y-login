@@ -44,7 +44,7 @@ app.post('/data/logeado',async function(req,res){
     console.log(cuenta);
     if(cuenta.length>0){res.send("sesión iniciada")
     }
-else{res.send("Contraseña incorrecta")}
+else{res.send("Usuario incorrecto")}
     
 })
 
