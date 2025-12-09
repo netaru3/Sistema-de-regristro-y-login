@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+</head>
+<body>
+    <h1>Registrarse</h1>
+    <h2>Cree una cuenta</h2>
+    <form action="/data" method="post">
+    <input type="text" placeholder="Ingrese su usuario" name="usuario"> 
+    
+    <br>
+
+    <input type="password" placeholder="Ingrese su contraseña" name="contraseña"> 
+    <br>
+<input type="submit" value="Enviar">
+    </form>
+
+    <button onclick="redireccionar()">Ya tengo una cuenta</button>
+</body>
+
+<script>
+    function redireccionar(){
+        window.location.href="http://localhost:3000/data"
+    }
+</script>
+</html>
