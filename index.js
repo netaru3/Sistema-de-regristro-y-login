@@ -44,8 +44,10 @@ app.post('/data/logeado',async function(req,res){
     console.log(cuenta);
     if(cuenta.length>0){res.send("sesión iniciada")
     }
-else{res.send("Usuario o contraseña incorrecta")}
+else{res.sendFile("login-false.html",{
+    root: import.meta.dirname})}
     
 })
 
 app.listen(3000)
+
