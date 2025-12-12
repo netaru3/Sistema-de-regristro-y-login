@@ -2,7 +2,7 @@ import express from 'express'
 import {log} from './mongo.js'
 import {createServer} from 'http'
 import {Server} from 'socket.io'
-
+ 
 let app= express()
 const server= createServer(app)
 const IO= new Server(server)
