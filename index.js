@@ -1,7 +1,13 @@
 import express from 'express'
 import {log} from './mongo.js'
+import {createServer} from 'http'
+import {Server} from 'socket.io'
 
 let app= express()
+const server= createServer(app)
+const IO= new Server(server)
+
+
 app.use(express.urlencoded({ extended: true }))
 app.get('/',function(req,res){ 
     res.sendFile("registro1.html",{
@@ -37,17 +43,29 @@ app.post('/data',function(req,res){
     
 })
 
-app.post('/data/logeado',async function(req,res){
+app.post('/data/logeado',async function(req,res,next){
     let cuenta=await log.find({usuario:req.body.usuario,
         contraseña:req.body.contraseña
     })
     console.log(cuenta);
     if(cuenta.length>0){res.send("sesión iniciada")
     }
-else{res.sendFile("login-false.html",{
-    root: import.meta.dirname})}
+else{
+     res.sendFile("login.html",{
+        root: import.meta.dirname
+     })
+}
     
 })
+IO.on("connection",function(socket){
+    console.log("te conectaste")
+    socket.on("error-sesion",function(){
+        socket.emit("error","hubo un error en el inicio de sesion")
+    })
 
-app.listen(3000)
+    socket.on("disconnect",function(){
+
+    })})
+
+server.listen(3000)
 
