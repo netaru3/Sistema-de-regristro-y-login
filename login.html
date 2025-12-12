@@ -108,23 +108,54 @@
 </head>
 <body>
     <div class="container">
-        <h1>Logearse</h1>
-        <h1>Ingrese sesión</h1>
-        <form action="/data/logeado" method="post">
-            <input type="text" placeholder="Ingrese su usuario" name="usuario"> 
-            <input type="password" placeholder="Ingrese su contraseña" name="contraseña"> 
-            <input type="submit" value="Enviar">
-        </form>
+    <h1>Logearse</h1>
+    <h1>Ingrese sesión</h1>
+    <form method="post">
+    <input type="text" placeholder="Ingrese su usuario" name="usuario" id="usuario"> 
+    
+    <br>
+
+    <input type="password" placeholder="Ingrese su contraseña" name="contraseña" 
+    id="contraseña"> 
+    <br>
+<input type="button" value="Enviar" onclick="enviar()">
+    </form>
 
          <script src="/socket.io/socket.io.js"></script>
     <script>
+          function enviar(){
+            fetch("/data/logeado", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    usuario: document.getElementById("usuario").value,
+    contraseña: document.getElementById("contraseña").value
+  })
+}).then(function(res){
+   return res.text()
+}).then(function(text){ if(text==="ok"){
+    window.location.href="http://localhost:3000/sesion"
+} else{alert(text)}
+    
+})
+        }
         const socket=io()
-        socket.emit("error-sesion","xd")
-        socket.on("error",
-            function(data){
-                alert("error en el inicio de sesión")
+        function señal(){socket.emit("error-sesion","xd")}
+    socket.on("error",
+            function(data){ if(document.getElementById("usuario").value=="" 
+            && document.getElementById("contraseña").value==""){
+                alert("ingrese usuario y contraseña");
+             }
+
+              else if(document.getElementById("usuario").value=="" 
+            || document.getElementById("contraseña").value==""){
+                alert("faltan usuario o contraseña")
             }
-        )
+            else {alert("error en el inicio de sesion")}})
+         
+            
     </script>
     </div>
 </body>
