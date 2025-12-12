@@ -134,21 +134,47 @@
 </head>
 <body>
     <div class="container">
-        <h1>Registrarse</h1>
-        <h2>Cree una cuenta</h2>
-        <form action="/data" method="post">
-            <input type="text" placeholder="Ingrese su usuario" name="usuario"> 
-            <input type="password" placeholder="Ingrese su contraseña" name="contraseña"> 
-            <input type="submit" value="Enviar">
-        </form>
+          <h1>Registrarse</h1>
+    <h2>Cree una cuenta</h2>
+    <input type="text" placeholder="Ingrese su usuario" name="usuario" id="usuario">
 
-        <button onclick="redireccionar()">Ya tengo una cuenta</button>
+    <br>
+
+    <input type="password" placeholder="Ingrese su contraseña" name="contraseña" id="contraseña">
+    <br>
+    <input type="button" value="Enviar" onclick="
+resultadofetch()">
+
+    <button onclick="redireccionar()">Ya tengo una cuenta</button>
+
+       
     </div>
 
     <script>
-        function redireccionar(){
-            window.location.href="https://sistema-de-regristro-y-login.onrender.com/data"
-        }
+      <script>
+    async function resultadofetch(){let resultado=await fetchpost()
+if(resultado===true){redireccionar()}}
+    function redireccionar() {
+        window.location.href = "http://localhost:3000/data"
+    }
+    function fetchpost() {
+       return fetch("/data", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                usuario: document.getElementById("usuario").value,
+                contraseña: document.getElementById("contraseña").value
+            })
+        }).then(function (texto) {
+          return  texto.text()
+        }).then(function (texto) {
+            if (texto === "el usuario ya está tomado") { alert(texto); return false }
+            else { return true }
+
+
+        })
+    }
+</script>
     </script>
 </body>
 </html>
