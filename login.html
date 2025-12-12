@@ -115,6 +115,17 @@
             <input type="password" placeholder="Ingrese su contraseña" name="contraseña"> 
             <input type="submit" value="Enviar">
         </form>
+
+         <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket=io()
+        socket.emit("error-sesion","xd")
+        socket.on("error",
+            function(data){
+                alert("error en el inicio de sesión")
+            }
+        )
+    </script>
     </div>
 </body>
 </html>
